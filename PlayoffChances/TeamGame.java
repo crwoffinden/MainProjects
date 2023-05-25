@@ -6,7 +6,12 @@ public class TeamGame {
     private Team opponent;
     private int scored;
     private int allowed;
-    private won result; 
+    private won result = null;
+    private boolean projection;
+    
+    public TeamGame(Team opp) {
+        opponent = opp;
+    }
 
     public Team getOpponent() {
         return opponent;
@@ -30,5 +35,13 @@ public class TeamGame {
         if (pointsScored > pointsAllowed) result = won.Win;
         else if (pointsScored < pointsAllowed) result = won.Loss;
         else result = won.Tie;
+    }
+
+    public void setProjection(boolean winProj) {
+        projection = winProj;
+    }
+
+    public boolean getProjection() {
+        return projection;
     }
 }
