@@ -32,18 +32,20 @@ public class Division {
                 --j;
             }
         }
-        for (int i = 0; i < (teams.length - 1); ++i) {
-            int tied = 1;
+        int tied = 1;
+        for (int i = 0; i < (teams.length - 1); i += tied) {
+            tied = 1;
             while (((i + tied) < teams.length) && winPcts[i + tied] == winPcts[i]) ++tied;
             if (tied > 1) {
                 Team[] tiedTeams = new Team[tied];
                 for (int j = 0; j < tied; ++j) tiedTeams[j] = teams[i + j];
                 Team[] brokenTie = tiebreak(tiedTeams, real);
+                for (int j = 0; j < tied; ++j) teams[i + j] = brokenTie[j];
             }
         }
     }
 
-    public Team[] tiebreak(Team[] tiedTeams, boolean real) { //FIXME set up tiebreakers struct and figure out the rest
+    public Team[] tiebreak(Team[] tiedTeams, boolean real) {
         Team[] brokenTie = new Team[tiedTeams.length];
         Tiebreakers[] teamTiebreakers = new Tiebreakers[tiedTeams.length];
         TeamGame[][] schedules = new TeamGame[tiedTeams.length][];
