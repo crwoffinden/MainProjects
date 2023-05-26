@@ -45,4 +45,18 @@ public class Tiebreakers {
     public double getConferenceRecord() {
         return (conferenceWins / conferenceGames);
     }
+
+    @Override
+    public boolean equals(Object obj) { //TODO add any new members
+        if (this.getClass() != obj.getClass()) return false;
+        if (this.headToHeadWins != ((Tiebreakers)obj).headToHeadWins) return false;
+        if (this.headToHeadGames != ((Tiebreakers)obj).headToHeadGames) return false;
+        if (this.divisionWins != ((Tiebreakers)obj).divisionWins) return false;
+        if (this.divisionGames != ((Tiebreakers)obj).divisionGames) return false;
+        if (this.commonGamesWon != ((Tiebreakers)obj).commonGamesWon) return false;
+        if (this.commonGamesPlayed != ((Tiebreakers)obj).commonGamesPlayed) return false;
+        if (this.conferenceWins != ((Tiebreakers)obj).conferenceWins) return false;
+        if (this.conferenceGames != ((Tiebreakers)obj).conferenceGames) return false;
+        return true;
+    }
 }
