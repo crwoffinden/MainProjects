@@ -59,7 +59,8 @@ class Team {
     public void reset() {
         projectedWins = realWins;
         projectedLosses = realLosses;
-        projectedWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
+        if ((realWins + realLosses + ties) == 0) projectedWinPct = 0.5;
+        else projectedWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
         projectedPlayoffAppearances = 0;
     }
 
@@ -71,7 +72,8 @@ class Team {
             else if (games[index].getResult() == won.Tie) ties += 1;
             index += 1;
         }
-        realWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
+        if (index == 0) realWinPct = 0.5;
+        else realWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
         reset();
     }
 

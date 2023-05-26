@@ -31,18 +31,22 @@ public class Tiebreakers {
     }
 
     public double getHeadToHeadRecord() {
+        if (headToHeadGames == 0) return 0.5;
         return (headToHeadWins / headToHeadGames);
     }
 
     public double getDivisionRecord() {
+        if (divisionGames == 0) return 0.5;
         return (divisionWins / divisionGames);
     }
 
     public double getCommonGamesRecord() {
+        if (commonGamesPlayed == 0) return 0.5;
         return (commonGamesWon / commonGamesPlayed);
     }
 
     public double getConferenceRecord() {
+        if (conferenceGames == 0) return 0.5;
         return (conferenceWins / conferenceGames);
     }
 
