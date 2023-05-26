@@ -91,4 +91,23 @@ class Team {
     public void makesPlayoffs() {
         projectedPlayoffAppearances += 1;
     }
+
+    @Override
+    public boolean equals(Object obj) { //TODO add any new members
+        if (this.getClass() != obj.getClass()) return false;
+        if (this.city != ((Team)obj).city) return false;
+        if (this.name != ((Team)obj).name) return false;
+        if (this.realWins != ((Team)obj).realWins) return false;
+        if (this.projectedWins != ((Team)obj).projectedWins) return false;
+        if (this.realLosses != ((Team)obj).realLosses) return false;
+        if (this.projectedLosses != ((Team)obj).projectedLosses) return false;
+        if (this.ties != ((Team)obj).ties) return false;
+        if (this.realWinPct != ((Team)obj).realWinPct) return false;
+        if (this.projectedWinPct != ((Team)obj).projectedWinPct) return false;
+        if (this.projectedPlayoffAppearances != ((Team)obj).projectedPlayoffAppearances) return false;
+        for (int i = 0; i < games.length; ++i) {
+            if (this.games[i] != ((Team)obj).games[i]) return false;
+        }
+        return true;
+    }
 }

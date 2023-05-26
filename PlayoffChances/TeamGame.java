@@ -44,4 +44,15 @@ public class TeamGame {
     public boolean getProjection() {
         return projection;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this.getClass() != obj.getClass()) return false;
+        if (this.opponent != ((TeamGame)obj).opponent) return false;
+        if (this.scored != ((TeamGame)obj).scored) return false;
+        if (this.allowed != ((TeamGame)obj).allowed) return false;
+        if (this.result != ((TeamGame)obj).result) return false;
+        if (this.projection != ((TeamGame)obj).projection) return false;
+        return true;
+    }
 }
