@@ -35,6 +35,10 @@ public class Tiebreakers {
         return (headToHeadWins / headToHeadGames);
     }
 
+    public double getHeadToHeadGames() {
+        return headToHeadGames;
+    }
+
     public double getDivisionRecord() {
         if (divisionGames == 0) return 0.5;
         return (divisionWins / divisionGames);
@@ -43,6 +47,10 @@ public class Tiebreakers {
     public double getCommonGamesRecord() {
         if (commonGamesPlayed == 0) return 0.5;
         return (commonGamesWon / commonGamesPlayed);
+    }
+
+    public double getCommonGamesPlayed() {
+        return commonGamesPlayed;
     }
 
     public double getConferenceRecord() {

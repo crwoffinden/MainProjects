@@ -32,21 +32,25 @@ public class Division {
                 --j;
             }
         }
-        int tied = 1;
-        for (int i = 0; i < (teams.length - 1); i += tied) {
-            tied = 1;
-            while (((i + tied) < teams.length) && winPcts[i + tied] == winPcts[i]) ++tied;
+        int index = 0;
+        while (index < teams.length) {
+            int tied = 1;
+            while ((tied < teams.length) && (winPcts[index + tied] == winPcts[index + tied - 1])) ++tied;
             if (tied > 1) {
                 Team[] tiedTeams = new Team[tied];
-                for (int j = 0; j < tied; ++j) tiedTeams[j] = teams[i + j];
-                Team[] brokenTie = tiebreak(tiedTeams, real);
-                for (int j = 0; j < tied; ++j) teams[i + j] = brokenTie[j];
+                for (int j = 0; j < tied; ++j) tiedTeams[j] = teams[index + j];
+                Team leader = tiebreak(tiedTeams, real);
+                int tempIndex = index;
+                while ((tempIndex < teams.length) && (teams[tempIndex] != leader)) ++tempIndex;
+                teams[tempIndex] = teams[index];
+                teams[index] = leader;
             }
+            ++index;
         }
     }
 
-    public Team[] tiebreak(Team[] tiedTeams, boolean real) {
-        Team[] brokenTie = new Team[tiedTeams.length];
+    public Team tiebreak(Team[] tiedTeams, boolean real) {
+        Team leader = null;
         Tiebreakers[] teamTiebreakers = new Tiebreakers[tiedTeams.length];
         TeamGame[][] schedules = new TeamGame[tiedTeams.length][];
         for (int i = 0; i < tiedTeams.length; ++i) schedules[i] = tiedTeams[i].getGames();
@@ -88,7 +92,6 @@ public class Division {
                                 teamTiebreakers[i].conferenceGame(wins);
                                 a = conferenceOf.getDivisions().length;
                                 b = teams.length;
-                                //break;
                             }
                         }
                     }
@@ -97,7 +100,7 @@ public class Division {
         }
         for (int i = 1; i < tiedTeams.length; ++i) {
             int j = i;
-            while ((j > 0) && (teamTiebreakers[j].getHeadToHeadRecord() > teamTiebreakers[j - 1].getHeadToHeadRecord())) {
+            while ((j > 0) && ((teamTiebreakers[j].getHeadToHeadRecord() > teamTiebreakers[j - 1].getHeadToHeadRecord()) || ((teamTiebreakers[j].getHeadToHeadRecord() == teamTiebreakers[j - 1].getHeadToHeadRecord()) && (teamTiebreakers[j].getHeadToHeadGames() > teamTiebreakers[j - 1].getHeadToHeadGames())))) {
                 Team temp = tiedTeams[j - 1];
                 tiedTeams[j - 1] = tiedTeams[j];
                 tiedTeams[j] = temp;
@@ -109,19 +112,14 @@ public class Division {
         }
         
         int stillTied = 1;
-        for (int i = 0; i < tiedTeams.length; i += stillTied) {
-            stillTied = 1;
-            while (teamTiebreakers[i + stillTied].getHeadToHeadRecord() == teamTiebreakers[i].getHeadToHeadRecord()) ++stillTied;
-            if (stillTied == 1) brokenTie[i] = tiedTeams[i];
-            else if (stillTied < tiedTeams.length) {
-                Team[] newTie = new Team[stillTied];
-                for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[i + j];
-                Team[] brokenNewTie = tiebreak(newTie, real);
-                for (int j = 0; j < stillTied; ++j) brokenTie[i + j] = brokenNewTie[j];
-            }
+        while ((stillTied < tiedTeams.length) && (teamTiebreakers[stillTied].getHeadToHeadRecord() == teamTiebreakers[stillTied - 1].getHeadToHeadRecord())) ++stillTied;
+        if (stillTied == 1) leader = tiedTeams[0];
+        else if (stillTied < tiedTeams.length) {
+            Team[] newTie = new Team[stillTied];
+            for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[j];
+            leader = tiebreak(tiedTeams, real);
         }
-
-        if (stillTied == tiedTeams.length) {
+        else if (stillTied == tiedTeams.length) {
             for (int i = 1; i < tiedTeams.length; ++i) {
                 int j = i;
                 while ((j > 0) && (teamTiebreakers[j].getDivisionRecord() > teamTiebreakers[j - 1].getDivisionRecord())) {
@@ -134,18 +132,15 @@ public class Division {
                     --j;
                 }
             }
-            for (int i = 0; i < tiedTeams.length; i += stillTied) {
-                stillTied = 1;
-                while (teamTiebreakers[i + stillTied].getDivisionRecord() == teamTiebreakers[i].getDivisionRecord()) ++stillTied;
-                if (stillTied == 1) brokenTie[i] = tiedTeams[i];
-                else if (stillTied < tiedTeams.length) {
-                    Team[] newTie = new Team[stillTied];
-                    for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[i + j];
-                    Team[] brokenNewTie = tiebreak(newTie, real);
-                    for (int j = 0; j < stillTied; ++j) brokenTie[i + j] = brokenNewTie[j];
-                }
+            stillTied = 1;
+            while ((stillTied < tiedTeams.length) && (teamTiebreakers[stillTied].getDivisionRecord() == teamTiebreakers[stillTied - 1].getDivisionRecord())) ++stillTied;
+            if (stillTied == 1) leader = tiedTeams[0];
+            else if (stillTied < tiedTeams.length) {
+                Team[] newTie = new Team[stillTied];
+                for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[j];
+                leader = tiebreak(tiedTeams, real);
             }
-            if (stillTied == tiedTeams.length) {
+            else if (stillTied == tiedTeams.length) {
                 for (int i = 1; i < tiedTeams.length; ++i) {
                     int j = i;
                     while ((j > 0) && (teamTiebreakers[j].getCommonGamesRecord() > teamTiebreakers[j - 1].getCommonGamesRecord())) {
@@ -158,18 +153,15 @@ public class Division {
                         --j;
                     }
                 }
-                for (int i = 0; i < tiedTeams.length; i += stillTied) {
-                    stillTied = 1;
-                    while (teamTiebreakers[i + stillTied].getCommonGamesRecord() == teamTiebreakers[i].getCommonGamesRecord()) ++stillTied;
-                    if (stillTied == 1) brokenTie[i] = tiedTeams[i];
-                    else if (stillTied < tiedTeams.length) {
-                        Team[] newTie = new Team[stillTied];
-                        for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[i + j];
-                        Team[] brokenNewTie = tiebreak(newTie, real);
-                        for (int j = 0; j < stillTied; ++j) brokenTie[i + j] = brokenNewTie[j];
-                    }
+                stillTied = 1;
+                while ((stillTied < tiedTeams.length) && (teamTiebreakers[stillTied].getHeadToHeadRecord() == teamTiebreakers[stillTied - 1].getHeadToHeadRecord())) ++stillTied;
+                if (stillTied == 1) leader = tiedTeams[0];
+                else if (stillTied < tiedTeams.length) {
+                    Team[] newTie = new Team[stillTied];
+                    for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[j];
+                    leader = tiebreak(tiedTeams, real);
                 }
-                if (stillTied == tiedTeams.length) {
+                else if (stillTied == tiedTeams.length) {
                     for (int i = 1; i < tiedTeams.length; ++i) {
                         int j = i;
                         while ((j > 0) && (teamTiebreakers[j].getConferenceRecord() > teamTiebreakers[j - 1].getConferenceRecord())) {
@@ -182,20 +174,17 @@ public class Division {
                             --j;
                         }
                     }
-                    for (int i = 0; i < tiedTeams.length; i += stillTied) {
-                        stillTied = 1;
-                        while (teamTiebreakers[i + stillTied].getConferenceRecord() == teamTiebreakers[i].getConferenceRecord()) ++stillTied;
-                        if (stillTied == 1) brokenTie[i] = tiedTeams[i];
-                        else if (stillTied < tiedTeams.length) {
-                            Team[] newTie = new Team[stillTied];
-                            for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[i + j];
-                            Team[] brokenNewTie = tiebreak(newTie, real);
-                            for (int j = 0; j < stillTied; ++j) brokenTie[i + j] = brokenNewTie[j];
-                        }
+                    stillTied = 1;
+                    while ((stillTied < tiedTeams.length) && (teamTiebreakers[stillTied].getHeadToHeadRecord() == teamTiebreakers[stillTied - 1].getHeadToHeadRecord())) ++stillTied;
+                    if (stillTied == 1) leader = tiedTeams[0];
+                    else if (stillTied < tiedTeams.length) {
+                        Team[] newTie = new Team[stillTied];
+                        for (int j = 0; j < stillTied; ++j) newTie[j] = tiedTeams[j];
+                        leader = tiebreak(tiedTeams, real);
                     }
                 }
             }
         }
-        return brokenTie;
+        return leader;
     }
 }

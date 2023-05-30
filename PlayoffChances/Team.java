@@ -12,6 +12,7 @@ class Team {
     private double realWinPct = 0.0;
     private double projectedWinPct = 0.0;
     private int projectedPlayoffAppearances = 0;
+    private double PlayoffChances = 0.0;
 
     public Team(String teamCity, String teamName) {
         city = teamCity;
@@ -92,6 +93,11 @@ class Team {
 
     public void makesPlayoffs() {
         projectedPlayoffAppearances += 1;
+    }
+
+    public double getPlayoffChances (double scenarios) {
+        PlayoffChances = (double) projectedPlayoffAppearances / scenarios;
+        return PlayoffChances;
     }
 
     @Override
