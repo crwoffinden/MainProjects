@@ -19,10 +19,11 @@ class Team {
         name = teamName;
     }
 
-    public void addGame(Team opponent) {
+    public int addGame(Team opponent, int pointsScored, int pointsAllowed) {
         int index = 0;
         while (games[index] != null) ++ index;
-        games[index] = new TeamGame(opponent);
+        games[index] = new TeamGame(opponent, pointsScored, pointsAllowed);
+        return index;
     }
 
     public String getCity() {

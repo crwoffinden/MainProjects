@@ -9,8 +9,17 @@ public class TeamGame {
     private won result = null;
     private boolean projection;
     
-    public TeamGame(Team opp) {
+    public TeamGame(Team opp, int pointsScored, int pointsAllowed) {
         opponent = opp;
+        scored = pointsScored;
+        allowed = pointsAllowed;
+        if (pointsScored != -1) {
+            scored = pointsScored;
+            allowed = pointsAllowed;
+            if (pointsScored > pointsAllowed) result = won.Win;
+            else if (pointsScored < pointsAllowed) result = won.Loss;
+            else result = won.Tie;
+        }
     }
 
     public Team getOpponent() {
@@ -27,14 +36,6 @@ public class TeamGame {
 
     public won getResult() {
         return result;
-    }
-
-    public void setScores(int pointsScored, int pointsAllowed) {
-        scored = pointsScored;
-        allowed = pointsAllowed;
-        if (pointsScored > pointsAllowed) result = won.Win;
-        else if (pointsScored < pointsAllowed) result = won.Loss;
-        else result = won.Tie;
     }
 
     public void setProjection(boolean winProj) {
