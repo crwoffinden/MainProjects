@@ -1,7 +1,15 @@
 package PlayoffChances;
 
 public class Conference {
-    private Division[] divisions = new Division[4]; //FIXME adjust to add divisions outside of class
+    private Division[] divisions = new Division[4];
+
+    public Conference(Division division1, Division division2, Division division3, Division division4) {
+        divisions[0] = division1;
+        divisions[1] = division2;
+        divisions[2] = division3;
+        divisions[3] = division4;
+        for (int i = 0; i < divisions.length; ++i) divisions[i].setConference(this);
+    }
     
     public Division[] getDivisions() {
         return divisions;
@@ -169,5 +177,14 @@ public class Conference {
             }
         }
         return leader;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) return false;
+        for (int i = 0; i < divisions.length; ++i) {
+            if (this.divisions[i] != ((Conference)obj).divisions[i]) return false;
+        }
+        return true;
     }
 }

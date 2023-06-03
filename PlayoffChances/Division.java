@@ -4,13 +4,16 @@ public class Division {
     private Team[] teams = new Team[4];
     private Conference conferenceOf;
     
-    public Division(Team team1, Team team2, Team team3, Team team4, Conference conference) {
+    public Division(Team team1, Team team2, Team team3, Team team4) {
         teams[0] = team1;
         teams[1] = team2;
         teams[2] = team3;
         teams[3] = team4;
-        conferenceOf = conference;
     }
+
+    public void setConference(Conference conference) {
+        conferenceOf = conference;
+    } 
 
     public Team[] getTeams() {
         return teams;
@@ -186,5 +189,15 @@ public class Division {
             }
         }
         return leader;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) return false;
+        for (int i = 0; i < teams.length; ++i) {
+            if (this.teams[i] != ((Division)obj).teams[i]) return false;
+        }
+        if (this.conferenceOf != ((Division)obj).conferenceOf) return false;
+        return true;
     }
 }

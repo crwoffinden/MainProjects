@@ -12,6 +12,15 @@ public class League {
 
     private Set<Game> games = new HashSet<Game>(0);
 
+    public League(Conference conference1, Conference conference2) {
+        conferences[0] = conference1;
+        conferences[1] = conference2;
+    }
+
+    public Conference[] getConferences() {
+        return conferences;
+    }
+
     public void initialize(File schedule) throws FileNotFoundException {
         Scanner in = new Scanner(new FileReader(schedule));
         while (in.hasNext()) {
@@ -54,7 +63,7 @@ public class League {
         }   
     }
 
-    public double project(double numProjections) { //FIXME figure out how to include calculation methods from other classes
+    public double project(double numProjections) {
         Game currGame = null;
         while (currGame == null && games.iterator().hasNext()) {
             Game nextGame = games.iterator().next();
