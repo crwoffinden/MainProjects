@@ -12,7 +12,12 @@ class Team {
     private double realWinPct = 0.0;
     private double projectedWinPct = 0.0;
     private int projectedPlayoffAppearances = 0;
-    private double PlayoffChances = 0.0;
+    private double playoffChances;
+    private int projectedDivisionWins = 0;
+    private double divisionChances;
+    private double wildCardChances;
+    private int projectedByes = 0;
+    private double byeChances;
 
     public Team(String teamCity, String teamName) {
         city = teamCity;
@@ -63,7 +68,7 @@ class Team {
         projectedLosses = realLosses;
         if ((realWins + realLosses + ties) == 0) projectedWinPct = 0.5;
         else projectedWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
-        projectedPlayoffAppearances = 0;
+        projectedPlayoffAppearances = 0; //FIXME validate
     }
 
     public void realGames() {
@@ -96,9 +101,32 @@ class Team {
         projectedPlayoffAppearances += 1;
     }
 
-    public double getPlayoffChances (double scenarios) {
-        PlayoffChances = (double) projectedPlayoffAppearances / scenarios;
-        return PlayoffChances;
+    public double getPlayoffChances(double scenarios) {
+        playoffChances = (double) projectedPlayoffAppearances / scenarios;
+        return playoffChances;
+    }
+
+    public void winsDivision() {
+        projectedDivisionWins += 1;
+    }
+
+    public double getDivisionChances(double scenarios) {
+        divisionChances = (double) projectedDivisionWins / scenarios;
+        return divisionChances;
+    }
+
+    public double getWildCardChances(double scenarios) {
+        wildCardChances = (double) (projectedPlayoffAppearances - projectedDivisionWins) / scenarios;
+        return wildCardChances;
+    }
+
+    public void winsConference() {
+        projectedByes += 1;
+    }
+
+    public double getByeChances(double scenarios) {
+        byeChances = (double) projectedByes / scenarios;
+        return byeChances;
     }
 
     @Override
@@ -114,9 +142,34 @@ class Team {
         if (this.realWinPct != ((Team)obj).realWinPct) return false;
         if (this.projectedWinPct != ((Team)obj).projectedWinPct) return false;
         if (this.projectedPlayoffAppearances != ((Team)obj).projectedPlayoffAppearances) return false;
+        if (this.projectedDivisionWins != ((Team)obj).projectedDivisionWins) return false;
+        if (this.divisionChances != ((Team)obj).divisionChances) return false;
+        if (this.projectedByes != ((Team)obj).projectedByes) return false;
+        if (this.byeChances != ((Team)obj).byeChances) return false;
         for (int i = 0; i < games.length; ++i) {
             if (this.games[i] != ((Team)obj).games[i]) return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        if (byeChances == 1.0) s.append("*-");
+        else if (divisionChances == 1.0) s.append("z-");
+        else if (wildCardChances == 1.0) s.append("y-");
+        else if (playoffChances == 1.0) s.append("x-");
+        else if (playoffChances == 0.0) s.append("e-");
+        s.append(city + " " + name); //FIXME figure out buffer
+        s.append(realWins);
+        s.append(realLosses);
+        s.append(ties);
+        s.append(realWinPct);
+        s.append(playoffChances);
+        s.append(divisionChances);
+        s.append(wildCardChances);
+        s.append(byeChances);
+        s.append("\n");
+        return s.toString();
     }
 }

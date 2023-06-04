@@ -1,10 +1,12 @@
 package PlayoffChances;
 
 public class Division {
+    private String name;
     private Team[] teams = new Team[4];
     private Conference conferenceOf;
     
-    public Division(Team team1, Team team2, Team team3, Team team4) {
+    public Division(String divisionName, Team team1, Team team2, Team team3, Team team4) {
+        name = divisionName;
         teams[0] = team1;
         teams[1] = team2;
         teams[2] = team3;
@@ -194,10 +196,30 @@ public class Division {
     @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != this.getClass()) return false;
+        if (this.name != ((Division)obj).name) return false;
         for (int i = 0; i < teams.length; ++i) {
             if (this.teams[i] != ((Division)obj).teams[i]) return false;
         }
         if (this.conferenceOf != ((Division)obj).conferenceOf) return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(name); //FIXME figure out buffer
+        s.append("W");
+        s.append("L");
+        s.append("T");
+        s.append("PCT");
+        s.append("Playoff %");
+        s.append("Division %");
+        s.append("Wild Card %");
+        s.append("Conference %");
+        s.append("\n");
+        for (int i = 0; i < teams.length; ++i) {
+            s.append(teams[i].toString());
+        }
+        return s.toString();
     }
 }

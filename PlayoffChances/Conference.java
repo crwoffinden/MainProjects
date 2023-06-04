@@ -1,9 +1,11 @@
 package PlayoffChances;
 
 public class Conference {
+    private String name;
     private Division[] divisions = new Division[4];
 
-    public Conference(Division division1, Division division2, Division division3, Division division4) {
+    public Conference(String conferenceName, Division division1, Division division2, Division division3, Division division4) {
+        name = conferenceName;
         divisions[0] = division1;
         divisions[1] = division2;
         divisions[2] = division3;
@@ -15,19 +17,46 @@ public class Conference {
         return divisions;
     }
 
-    public void projectPlayoffs() { //TODO possibly adjust for chances of winning division/conference
+    public void projectPlayoffs() {
+        Team[] teams = new Team[4];
         for (int i = 0; i < divisions.length; ++i) {
             divisions[i].rank(false);
             divisions[i].getTeams()[0].makesPlayoffs();
+            divisions[i].getTeams()[0].winsDivision();
+            teams[i] = divisions[i].getTeams()[0];
         }
+        double highestWinPct = 0.0;
+        int numTeams = 0;
+        for (int j = 0; j < teams.length; ++j) {
+            if (teams[j].getProjectedWinPct() > highestWinPct) {
+                highestWinPct = teams[j].getProjectedWinPct();
+                numTeams = 1;
+            }
+            else if (teams[j].getProjectedWinPct() == highestWinPct) numTeams += 1;
+        }
+        int index = 0;
+        if (numTeams == 1) {
+            while ((index < teams.length) && teams[index].getProjectedWinPct() != highestWinPct) ++index;
+            teams[index].winsConference();
+        }
+        else {
+            Team[] tiedTeams = new Team[numTeams];
+            for (int j = 0; j < teams.length; ++j) {
+                if (teams[j].getProjectedWinPct() == highestWinPct) {
+                    tiedTeams[(tiedTeams.length - numTeams)] = teams[j];
+                    --numTeams;
+                }
+            }
+            tiebreak(tiedTeams, false).winsConference();
+        }
+
         int eastIndex = 1;
         int northIndex = 1;
         int southIndex = 1;
         int westIndex = 1;
         for (int i = 0; i < 3; ++i) {
-            double highestWinPct = 0.0;
-            int numTeams = 0;
-            Team[] teams = new Team[4];
+            highestWinPct = 0.0;
+            numTeams = 0;
             teams[0] = divisions[0].getTeams()[eastIndex];
             teams[1] = divisions[1].getTeams()[northIndex];
             teams[2] = divisions[2].getTeams()[southIndex];
@@ -39,7 +68,7 @@ public class Conference {
                 }
                 else if (teams[j].getProjectedWinPct() == highestWinPct) numTeams += 1;
             }
-            int index = 0;
+            index = 0;
             if (numTeams == 1) {
                 while ((index < teams.length) && teams[index].getProjectedWinPct() != highestWinPct) ++index;
                 teams[index].makesPlayoffs();
@@ -182,9 +211,17 @@ public class Conference {
     @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != this.getClass()) return false;
+        if (this.name != ((Conference)obj).name) return false;
         for (int i = 0; i < divisions.length; ++i) {
             if (this.divisions[i] != ((Conference)obj).divisions[i]) return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder(name + "\n");
+        for (int i = 0; i < divisions.length; ++i) s.append(divisions[i].toString());
+        return s.toString();
     }
 }

@@ -80,4 +80,11 @@ public class League {
         games.add(currGame);
         return numProjections;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < conferences.length; ++i) s.append(conferences[i].toString());
+        return s.toString();
+    }
 }
