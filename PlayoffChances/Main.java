@@ -73,10 +73,8 @@ public class Main {
             }
         }
 
-        //File out = new File(args[1]);
-        FileWriter out;
         try {
-            out = new FileWriter(args[1]);
+            FileWriter out = new FileWriter(args[1]);
             out.write(nfl.toString());
             out.close();
         } catch (IOException e) {
