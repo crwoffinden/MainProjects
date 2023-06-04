@@ -2,6 +2,8 @@ package PlayoffChances;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static int main(String[] args) throws FileNotFoundException {
@@ -64,10 +66,24 @@ public class Main {
             for (int j = 0; j < nfl.getConferences()[i].getDivisions().length; ++j) {
                 for (int k = 0; k < nfl.getConferences()[i].getDivisions()[j].getTeams().length; ++k) {
                     nfl.getConferences()[i].getDivisions()[j].getTeams()[k].getPlayoffChances(numProjections);
+                    nfl.getConferences()[i].getDivisions()[j].getTeams()[k].getDivisionChances(numProjections);
+                    nfl.getConferences()[i].getDivisions()[j].getTeams()[k].getWildCardChances(numProjections);
+                    nfl.getConferences()[i].getDivisions()[j].getTeams()[k].getByeChances(numProjections);
                 }
             }
         }
 
+        //File out = new File(args[1]);
+        FileWriter out;
+        try {
+            out = new FileWriter(args[1]);
+            out.write(nfl.toString());
+            out.close();
+        } catch (IOException e) {
+            System.out.print("Problem creating file");
+            e.printStackTrace();
+        }
+        
         return 0;
     }
 }
