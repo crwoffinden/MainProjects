@@ -14,8 +14,6 @@ public class TeamGame {
         scored = pointsScored;
         allowed = pointsAllowed;
         if (pointsScored != -1) {
-            scored = pointsScored;
-            allowed = pointsAllowed;
             if (pointsScored > pointsAllowed) result = won.Win;
             else if (pointsScored < pointsAllowed) result = won.Loss;
             else result = won.Tie;
