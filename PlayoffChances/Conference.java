@@ -212,6 +212,7 @@ public class Conference {
     public boolean equals(Object obj) {
         if (obj.getClass() != this.getClass()) return false;
         if (this.name != ((Conference)obj).name) return false;
+        if (this.divisions.length != ((Conference)obj).divisions.length) return false;
         for (int i = 0; i < divisions.length; ++i) {
             if (this.divisions[i] != ((Conference)obj).divisions[i]) return false;
         }
