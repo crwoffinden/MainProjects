@@ -41,6 +41,7 @@ public class League {
             int awayScore;
             if (in.hasNextInt()) awayScore = in.nextInt();
             else awayScore = -1;
+            //FIXME potential buffer?
             Team homeTeam = null;
             String homeName = in.next();
             for (int i = 0; i < conferences.length; ++i) {
@@ -67,8 +68,8 @@ public class League {
         Game currGame = null;
         while (currGame == null && games.iterator().hasNext()) {
             Game nextGame = games.iterator().next();
-            if (!nextGame.real()) {
-                games.remove(nextGame);
+            games.remove(nextGame);
+            if (!nextGame.real()) {    
                 currGame = nextGame;
             }
         }
