@@ -40,15 +40,18 @@ public class Division {
         int index = 0;
         while (index < teams.length) {
             int tied = 1;
-            while ((tied < teams.length) && (winPcts[index + tied] == winPcts[index + tied - 1])) ++tied;
+            while (((index + tied) < teams.length) && (winPcts[index + tied] == winPcts[index + tied - 1])) ++tied;
             if (tied > 1) {
                 Team[] tiedTeams = new Team[tied];
                 for (int j = 0; j < tied; ++j) tiedTeams[j] = teams[index + j];
                 Team leader = tiebreak(tiedTeams, real);
                 int tempIndex = index;
-                while ((tempIndex < teams.length) && (teams[tempIndex] != leader)) ++tempIndex;
+                while ((tempIndex < teams.length) && (!(teams[tempIndex].equals(leader)))) ++tempIndex;
                 teams[tempIndex] = teams[index];
                 teams[index] = leader;
+                double tempPct = winPcts[tempIndex];
+                winPcts[tempIndex] = winPcts[index];
+                winPcts[index] = tempPct;
             }
             ++index;
         }
@@ -58,7 +61,10 @@ public class Division {
         Team leader = null;
         Tiebreakers[] teamTiebreakers = new Tiebreakers[tiedTeams.length];
         TeamGame[][] schedules = new TeamGame[tiedTeams.length][];
-        for (int i = 0; i < tiedTeams.length; ++i) schedules[i] = tiedTeams[i].getGames();
+        for (int i = 0; i < tiedTeams.length; ++i) {
+            teamTiebreakers[i] = new Tiebreakers();
+            schedules[i] = tiedTeams[i].getGames();
+        }
         for (int i = 0; i < tiedTeams.length; ++i) {
             for (int j = 0; j < schedules[i].length; ++j) {
                 if ((schedules[i][j].getResult() == null) && real) j = schedules[i].length;
@@ -69,13 +75,13 @@ public class Division {
                     else if (schedules[i][j].getResult() == won.Tie) wins = 0.5;
                     Team opponent = schedules[i][j].getOpponent();
                     for (int w = 0; w < tiedTeams.length; ++w) {
-                        if (opponent == tiedTeams[w])  {
+                        if (opponent.equals(tiedTeams[w]))  {
                             teamTiebreakers[i].headToHeadGame(wins);
                             w = tiedTeams.length;
                         }
                     }
                     for (int x = 0; x < teams.length; ++x) {
-                        if (opponent == teams[x]) {
+                        if (opponent.equals(teams[x])) {
                             teamTiebreakers[i].divisionGame(wins);
                             x = teams.length;
                         }
@@ -84,7 +90,7 @@ public class Division {
                     for (int y = 0; y < tiedTeams.length; ++y) {
                         if ((y != i) && common) {
                             int game = 0;
-                            while ((game < schedules.length) && (schedules[y][game].getOpponent() != opponent)) ++game;
+                            while ((game < schedules.length) && (!(schedules[y][game].getOpponent().equals(opponent)))) ++game;
                             if (game == schedules.length) common = false;
                         }
                     }
@@ -93,7 +99,7 @@ public class Division {
                     }
                     for (int a = 0; a < conferenceOf.getDivisions().length; ++a) {
                         for (int b = 0; b < teams.length; ++b) {
-                            if (conferenceOf.getDivisions()[a].getTeams()[b] == opponent) {
+                            if (conferenceOf.getDivisions()[a].getTeams()[b].equals(opponent)) {
                                 teamTiebreakers[i].conferenceGame(wins);
                                 a = conferenceOf.getDivisions().length;
                                 b = teams.length;
@@ -195,17 +201,18 @@ public class Division {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) return false;
-        if (this.name != ((Division)obj).name) return false;
+        if (!(obj.getClass().equals(this.getClass()))) return false;
+        if (!(this.name.equals(((Division)obj).name))) return false;
         for (int i = 0; i < teams.length; ++i) {
-            if (this.teams[i] != ((Division)obj).teams[i]) return false;
+            if (!(this.teams[i].equals(((Division)obj).teams[i]))) return false;
         }
-        if (this.conferenceOf != ((Division)obj).conferenceOf) return false;
+        if (!(this.conferenceOf.equals(((Division)obj).conferenceOf))) return false;
         return true;
     }
 
     @Override
     public String toString() {
+        rank(true);
         StringBuilder s = new StringBuilder();
         s.append(name); //FIXME figure out buffer
         s.append("W");

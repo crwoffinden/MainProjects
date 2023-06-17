@@ -28,6 +28,7 @@ class Team {
         int index = 0;
         while (games[index] != null) ++ index;
         games[index] = new TeamGame(opponent, pointsScored, pointsAllowed);
+        realGames();
         return index;
     }
 
@@ -66,31 +67,34 @@ class Team {
     public void reset() {
         projectedWins = realWins;
         projectedLosses = realLosses;
-        if ((realWins + realLosses + ties) == 0) projectedWinPct = 0.5;
-        else projectedWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
-        projectedPlayoffAppearances = 0; //FIXME validate
+        //if ((realWins + realLosses + ties) == 0) projectedWinPct = 0.5;
+        //else projectedWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
+        //projectedPlayoffAppearances = 0; //FIXME validate
     }
 
     public void realGames() {
         int index = 0;
-        while (games[index].getResult() != null) {
+        realWins = 0;
+        realLosses = 0;
+        ties = 0;
+        while ((index < games.length) && (games[index] != null) && (games[index].getResult() != null)) {
             if (games[index].getResult() == won.Win) realWins += 1;
             else if (games[index].getResult() == won.Loss) realLosses += 1;
             else if (games[index].getResult() == won.Tie) ties += 1;
             index += 1;
         }
         if (index == 0) realWinPct = 0.5;
-        else realWinPct = (realWins + (double) (ties / 2)) / (realWins + realLosses + ties);
-        reset();
+        else realWinPct = (realWins + (((double) (ties)) / 2)) / (realWins + realLosses + ties);
     }
 
     public void projectGames() {
         int index = realWins + realLosses + ties;
         while (index < 17) {
-            if (games[index].getProjection()) projectedWins += 1;
+            if ((games[index] != null) && (games[index].getProjection())) projectedWins += 1;
             else projectedLosses += 1;
+            index += 1;
         }
-        projectedWinPct = (projectedWins + (double) (ties / 2)) / (projectedWins + projectedLosses + ties);
+        projectedWinPct = (projectedWins + (((double) (ties)) / 2)) / (projectedWins + projectedLosses + ties);
     }
 
     public int getProjectedPlayoffAppearances() {
@@ -131,9 +135,9 @@ class Team {
 
     @Override
     public boolean equals(Object obj) { //TODO add any new members
-        if (this.getClass() != obj.getClass()) return false;
-        if (this.city != ((Team)obj).city) return false;
-        if (this.name != ((Team)obj).name) return false;
+        if (!(this.getClass().equals(obj.getClass()))) return false;
+        if (!(this.city.equals(((Team)obj).city))) return false;
+        if (!(this.name.equals(((Team)obj).name))) return false;
         if (this.realWins != ((Team)obj).realWins) return false;
         if (this.projectedWins != ((Team)obj).projectedWins) return false;
         if (this.realLosses != ((Team)obj).realLosses) return false;
@@ -146,8 +150,14 @@ class Team {
         if (this.divisionChances != ((Team)obj).divisionChances) return false;
         if (this.projectedByes != ((Team)obj).projectedByes) return false;
         if (this.byeChances != ((Team)obj).byeChances) return false;
+        if (this.games.length != ((Team)obj).games.length) return false;
         for (int i = 0; i < games.length; ++i) {
-            if (this.games[i] != ((Team)obj).games[i]) return false;
+            if (this.games[i] == null) {
+                if (((Team)obj).games[i] != null) return false;
+                else return true;
+            }
+            if (!(this.games[i].teamEquals(((Team)obj).games[i]))) return false;
+            if (!(this.games[i].getOpponent().getName().equals(((Team)obj).games[i].getOpponent().getName()))) return false;
         }
         return true;
     }
@@ -155,20 +165,20 @@ class Team {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        if (byeChances == 1.0) s.append("*-");
-        else if (divisionChances == 1.0) s.append("z-");
-        else if (wildCardChances == 1.0) s.append("y-");
-        else if (playoffChances == 1.0) s.append("x-");
-        else if (playoffChances == 0.0) s.append("e-");
-        s.append(city + " " + name); //FIXME figure out buffer
-        s.append(realWins);
-        s.append(realLosses);
-        s.append(ties);
-        s.append(realWinPct);
-        s.append(playoffChances);
-        s.append(divisionChances);
-        s.append(wildCardChances);
-        s.append(byeChances);
+        if (byeChances == 1.0) s.append("*- ");
+        else if (divisionChances == 1.0) s.append("z- ");
+        else if (wildCardChances == 1.0) s.append("y- ");
+        else if (playoffChances == 1.0) s.append("x- ");
+        else if (playoffChances == 0.0) s.append("e- ");
+        s.append(city + " " + name + " "); //FIXME figure out buffer
+        s.append(realWins + " ");
+        s.append(realLosses + " ");
+        s.append(ties + " ");
+        s.append(realWinPct + " ");
+        s.append(playoffChances + " ");
+        s.append(divisionChances + " ");
+        s.append(wildCardChances + " ");
+        s.append(byeChances + " ");
         s.append("\n");
         return s.toString();
     }

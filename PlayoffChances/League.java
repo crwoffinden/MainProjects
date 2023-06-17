@@ -21,22 +21,23 @@ public class League {
         return conferences;
     }
 
-    public void initialize(File schedule) throws FileNotFoundException {
-        Scanner in = new Scanner(new FileReader(schedule));
+    public void initialize(String schedule) throws FileNotFoundException {
+        String pathname = "\\Users\\crwof\\MainProjects\\PlayoffChances\\" + schedule;
+        Scanner in = new Scanner(new FileReader(new File(pathname)));
         while (in.hasNext()) {
             Team awayTeam = null;
             String awayName = in.next();
             for (int i = 0; i < conferences.length; ++i) {
                 for (int j = 0; j < conferences[i].getDivisions().length; ++j) {
                     for (int k = 0; k < conferences[i].getDivisions()[j].getTeams().length; ++k) {
-                        if (conferences[i].getDivisions()[j].getTeams()[k].getName() == awayName) {
+                        if (conferences[i].getDivisions()[j].getTeams()[k].getName().equals(awayName)) {
                             awayTeam = conferences[i].getDivisions()[j].getTeams()[k];
-                            i = conferences.length;
-                            j = conferences[i].getDivisions().length;
-                            k = conferences[i].getDivisions()[j].getTeams().length;
+                            break;
                         }
                     }
+                    if (awayTeam != null) break;
                 }
+                if (awayTeam != null) break;
             }
             int awayScore;
             if (in.hasNextInt()) awayScore = in.nextInt();
@@ -47,14 +48,14 @@ public class League {
             for (int i = 0; i < conferences.length; ++i) {
                 for (int j = 0; j < conferences[i].getDivisions().length; ++j) {
                     for (int k = 0; k < conferences[i].getDivisions()[j].getTeams().length; ++k) {
-                        if (conferences[i].getDivisions()[j].getTeams()[k].getName() == homeName) {
-                            awayTeam = conferences[i].getDivisions()[j].getTeams()[k];
-                            i = conferences.length;
-                            j = conferences[i].getDivisions().length;
-                            k = conferences[i].getDivisions()[j].getTeams().length;
+                        if (conferences[i].getDivisions()[j].getTeams()[k].getName().equals(homeName)) {
+                            homeTeam = conferences[i].getDivisions()[j].getTeams()[k];
+                            break;
                         }
                     }
+                    if (homeTeam != null) break;
                 }
+                if (homeTeam != null) break;
             }
             int homeScore;
             if (in.hasNextInt()) homeScore = in.nextInt();
@@ -73,13 +74,28 @@ public class League {
                 currGame = nextGame;
             }
         }
-        if (currGame == null) return (numProjections + 1.0);
+        if (currGame == null) {
+            runProjections();
+            return (numProjections + 1.0);
+        } 
         currGame.project(false);
         numProjections = project(numProjections);
         currGame.project(true);
         numProjections = project(numProjections);
         games.add(currGame);
         return numProjections;
+    }
+
+    public void runProjections() {
+        for (int i = 0; i < conferences.length; ++i) {
+            for (int j = 0; j < conferences[i].getDivisions().length; ++j) {
+                for (int k = 0; k < conferences[i].getDivisions()[j].getTeams().length; ++k) {
+                    conferences[i].getDivisions()[j].getTeams()[k].reset();
+                    conferences[i].getDivisions()[j].getTeams()[k].projectGames();
+                }
+            }
+            conferences[i].projectPlayoffs();
+        }
     }
 
     @Override

@@ -82,14 +82,18 @@ public class Conference {
                     }
                 }
                 Team playoffTeam = tiebreak(tiedTeams, false);
-                while ((index < teams.length) && (teams[index] != playoffTeam)) ++index;
+                while ((index < teams.length) && (!(teams[index].equals(playoffTeam)))) ++index;
                 playoffTeam.makesPlayoffs();
             }
             switch(index) {
                 case(0): eastIndex += 1;
+                         break;
                 case(1): northIndex += 1;
+                         break;
                 case(2): southIndex += 1;
+                         break;
                 case(3): westIndex += 1;
+                         break;
             }
         }
     }
@@ -98,7 +102,10 @@ public class Conference {
         Team leader = null;
         Tiebreakers[] teamTiebreakers = new Tiebreakers[tiedTeams.length];
         TeamGame[][] schedules = new TeamGame[tiedTeams.length][];
-        for (int i = 0; i < tiedTeams.length; ++i) schedules[i] = tiedTeams[i].getGames();
+        for (int i = 0; i < tiedTeams.length; ++i) {
+            teamTiebreakers[i] = new Tiebreakers();
+            schedules[i] = tiedTeams[i].getGames();
+        }
         for (int i = 0; i < tiedTeams.length; ++i) {
             for (int j = 0; j < schedules[i].length; ++j) {
                 if ((schedules[i][j].getResult() == null) && real) j = schedules[i].length;
@@ -109,27 +116,29 @@ public class Conference {
                     else if (schedules[i][j].getResult() == won.Tie) wins = 0.5;
                     Team opponent = schedules[i][j].getOpponent();
                     for (int w = 0; w < tiedTeams.length; ++w) {
-                        if (opponent == tiedTeams[w])  {
+                        if (opponent.equals(tiedTeams[w]))  {
                             teamTiebreakers[i].headToHeadGame(wins);
                             w = tiedTeams.length;
                         }
                     }
 
+                    boolean found = false;
                     for (int a = 0; a < divisions.length; ++a) {
                         for (int b = 0; b < divisions[a].getTeams().length; ++b) {
-                            if (divisions[a].getTeams()[b] == opponent) {
+                            if (divisions[a].getTeams()[b].equals(opponent)) {
                                 teamTiebreakers[i].conferenceGame(wins);
-                                a = divisions.length;
-                                b = divisions[a].getTeams().length;
+                                found = true;
+                                break;
                             }
                         }
+                        if (found) break;
                     }
 
                     boolean common = true;
                     for (int y = 0; y < tiedTeams.length; ++y) {
                         if ((y != i) && common) {
                             int game = 0;
-                            while ((game < schedules.length) && (schedules[y][game].getOpponent() != opponent)) ++game;
+                            while ((game < schedules.length) && (!(schedules[y][game].getOpponent().equals(opponent)))) ++game;
                             if (game == schedules.length) common = false;
                         }
                     }
@@ -210,11 +219,11 @@ public class Conference {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) return false;
-        if (this.name != ((Conference)obj).name) return false;
+        if (!(obj.getClass().equals(this.getClass()))) return false;
+        if (!(this.name.equals(((Conference)obj).name))) return false;
         if (this.divisions.length != ((Conference)obj).divisions.length) return false;
         for (int i = 0; i < divisions.length; ++i) {
-            if (this.divisions[i] != ((Conference)obj).divisions[i]) return false;
+            if (!(this.divisions[i].equals(((Conference)obj).divisions[i]))) return false;
         }
         return true;
     }

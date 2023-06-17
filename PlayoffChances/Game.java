@@ -28,9 +28,9 @@ public class Game {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() != this.getClass()) return false;
-        if (this.homeTeam != ((Game)obj).homeTeam) return false;
-        if (this.awayTeam != ((Game)obj).awayTeam) return false;
+        if (!(obj.getClass().equals(this.getClass()))) return false;
+        if (!(this.homeTeam.equals(((Game)obj).homeTeam))) return false;
+        if (!(this.awayTeam.equals(((Game)obj).awayTeam))) return false;
         if (this.homeScore != ((Game)obj).homeScore) return false;
         if (this.awayScore != ((Game)obj).awayScore) return false;
         if (this.homeIndex != ((Game)obj).homeIndex) return false;

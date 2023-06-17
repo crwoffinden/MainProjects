@@ -1,5 +1,7 @@
 package PlayoffChances;
 
+import javax.swing.text.rtf.RTFEditorKit;
+
 enum won {Win, Loss, Tie}
 
 public class TeamGame {
@@ -46,8 +48,17 @@ public class TeamGame {
 
     @Override
     public boolean equals(Object obj) {
-        if (this.getClass() != obj.getClass()) return false;
-        if (this.opponent != ((TeamGame)obj).opponent) return false;
+        if (!(this.getClass().equals(obj.getClass()))) return false;
+        if (!(this.opponent.equals(((TeamGame)obj).opponent))) return false;
+        if (this.scored != ((TeamGame)obj).scored) return false;
+        if (this.allowed != ((TeamGame)obj).allowed) return false;
+        if (this.result != ((TeamGame)obj).result) return false;
+        if (this.projection != ((TeamGame)obj).projection) return false;
+        return true;
+    }
+
+    public boolean teamEquals(Object obj) {
+        if (!(this.getClass().equals(obj.getClass()))) return false;
         if (this.scored != ((TeamGame)obj).scored) return false;
         if (this.allowed != ((TeamGame)obj).allowed) return false;
         if (this.result != ((TeamGame)obj).result) return false;

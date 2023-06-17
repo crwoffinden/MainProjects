@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
-    public static int main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
         Team buffaloBills = new Team("Buffalo", "Bills");
         Team miamiDolphins = new Team("Miami", "Dolphins");
         Team newEnglandPatriots = new Team("New England", "Patriots");
@@ -59,8 +59,7 @@ public class Main {
         League nfl = new League(afc, nfc);
 
         String scheduleFileName = args[0];
-        File schedule = new File(scheduleFileName);
-        nfl.initialize(schedule);
+        nfl.initialize(scheduleFileName);
         double numProjections = nfl.project(0);
         for (int i = 0; i < nfl.getConferences().length; ++i) {
             for (int j = 0; j < nfl.getConferences()[i].getDivisions().length; ++j) {
@@ -74,14 +73,13 @@ public class Main {
         }
 
         try {
-            FileWriter out = new FileWriter(args[1]);
+            String pathname = "\\Users\\crwof\\MainProjects\\PlayoffChances\\" + args[1];
+            FileWriter out = new FileWriter(pathname);
             out.write(nfl.toString());
             out.close();
         } catch (IOException e) {
             System.out.print("Problem creating file");
             e.printStackTrace();
         }
-        
-        return 0;
     }
 }

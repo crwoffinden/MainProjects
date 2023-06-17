@@ -60,7 +60,7 @@ public class Tiebreakers {
 
     @Override
     public boolean equals(Object obj) { //TODO add any new members
-        if (this.getClass() != obj.getClass()) return false;
+        if (!(this.getClass().equals(obj.getClass()))) return false;
         if (this.headToHeadWins != ((Tiebreakers)obj).headToHeadWins) return false;
         if (this.headToHeadGames != ((Tiebreakers)obj).headToHeadGames) return false;
         if (this.divisionWins != ((Tiebreakers)obj).divisionWins) return false;

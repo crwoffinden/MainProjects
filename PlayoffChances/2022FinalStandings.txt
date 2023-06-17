@@ -1,0 +1,42 @@
+American Football Conference
+AFC EastWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Buffalo Bills 13 3 0 0.8125 1.0 1.0 0.0 0.0 
+y- Miami Dolphins 9 8 0 0.5294117647058824 1.0 0.0 1.0 0.0 
+e- New England Patriots 8 9 0 0.47058823529411764 0.0 0.0 0.0 0.0 
+e- New York Jets 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+AFC NorthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Cincinnatti Bengals 12 4 0 0.75 1.0 1.0 0.0 0.0 
+y- Baltimore Ravens 10 7 0 0.5882352941176471 1.0 0.0 1.0 0.0 
+e- Pittsburgh Steelers 9 8 0 0.5294117647058824 0.0 0.0 0.0 0.0 
+e- Cleveland Browns 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+AFC SouthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Jacksonville Jaguars 9 8 0 0.5294117647058824 1.0 1.0 0.0 0.0 
+e- Tennessee Titans 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+e- Indianapolis Colts 4 12 1 0.2647058823529412 0.0 0.0 0.0 0.0 
+e- Houston Texans 3 13 1 0.20588235294117646 0.0 0.0 0.0 0.0 
+AFC WestWLTPCTPlayoff %Division %Wild Card %Conference %
+*- Kansas City Chiefs 14 3 0 0.8235294117647058 1.0 1.0 0.0 1.0 
+y- Los Angeles Chargers 10 7 0 0.5882352941176471 1.0 0.0 1.0 0.0 
+e- Las Vegas Raiders 6 11 0 0.35294117647058826 0.0 0.0 0.0 0.0 
+e- Denver Broncos 5 12 0 0.29411764705882354 0.0 0.0 0.0 0.0 
+National Football Conference
+NFC EastWLTPCTPlayoff %Division %Wild Card %Conference %
+*- Philadelphia Eagles 14 3 0 0.8235294117647058 1.0 1.0 0.0 1.0 
+y- Dallas Cowboys 12 5 0 0.7058823529411765 1.0 0.0 1.0 0.0 
+y- New York Giants 9 7 1 0.5588235294117647 1.0 0.0 1.0 0.0 
+e- Washington Commanders 8 8 1 0.5 0.0 0.0 0.0 0.0 
+NFC NorthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Minnesota Vikings 13 4 0 0.7647058823529411 1.0 1.0 0.0 0.0 
+e- Detroit Lions 9 8 0 0.5294117647058824 0.0 0.0 0.0 0.0 
+e- Green Bay Packers 8 9 0 0.47058823529411764 0.0 0.0 0.0 0.0 
+e- Chicago Bears 3 14 0 0.17647058823529413 0.0 0.0 0.0 0.0 
+NFC SouthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Tampa Bay Buccaneers 8 9 0 0.47058823529411764 1.0 1.0 0.0 0.0 
+e- Carolina Panthers 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+e- New Orleans Saints 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+e- Atlanta Falcons 7 10 0 0.4117647058823529 0.0 0.0 0.0 0.0 
+NFC WestWLTPCTPlayoff %Division %Wild Card %Conference %
+z- San Francisco 49ers 13 4 0 0.7647058823529411 1.0 1.0 0.0 0.0 
+y- Seattle Seahawks 9 8 0 0.5294117647058824 1.0 0.0 1.0 0.0 
+e- Los Angeles Rams 5 12 0 0.29411764705882354 0.0 0.0 0.0 0.0 
+e- Arizona Cardinals 4 13 0 0.23529411764705882 0.0 0.0 0.0 0.0 
