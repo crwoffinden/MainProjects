@@ -108,7 +108,7 @@ public class Conference {
         }
         for (int i = 0; i < tiedTeams.length; ++i) {
             for (int j = 0; j < schedules[i].length; ++j) {
-                if ((schedules[i][j].getResult() == null) && real) j = schedules[i].length;
+                if ((schedules[i][j] == null) || ((schedules[i][j].getResult() == null) && real)) j = schedules[i].length;
                 else {
                     double wins = 0.0;
                     if ((schedules[i][j].getResult() == won.Win) || (!real && schedules[i][j].getProjection())) wins = 1.0;

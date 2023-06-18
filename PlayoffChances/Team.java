@@ -90,8 +90,10 @@ class Team {
     public void projectGames() {
         int index = realWins + realLosses + ties;
         while (index < 17) {
-            if ((games[index] != null) && (games[index].getProjection())) projectedWins += 1;
-            else projectedLosses += 1;
+            if (games[index] != null) {
+                if (games[index].getProjection()) projectedWins += 1;
+                else projectedLosses += 1;
+            }
             index += 1;
         }
         projectedWinPct = (projectedWins + (((double) (ties)) / 2)) / (projectedWins + projectedLosses + ties);

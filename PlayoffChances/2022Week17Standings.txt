@@ -1,0 +1,42 @@
+American Football Conference
+AFC EastWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Buffalo Bills 12 3 0 0.8 1.0 1.0 0.0 0.25 
+New England Patriots 8 8 0 0.5 0.5625 0.0 0.5625 0.0 
+Miami Dolphins 8 8 0 0.5 0.25 0.0 0.25 0.0 
+e- New York Jets 7 9 0 0.4375 0.0 0.0 0.0 0.0 
+AFC NorthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Cincinnatti Bengals 11 4 0 0.7333333333333333 1.0 1.0 0.0 0.0 
+y- Baltimore Ravens 10 6 0 0.625 1.0 0.0 1.0 0.0 
+Pittsburgh Steelers 8 8 0 0.5 0.125 0.0 0.125 0.0 
+e- Cleveland Browns 7 9 0 0.4375 0.0 0.0 0.0 0.0 
+AFC SouthWLTPCTPlayoff %Division %Wild Card %Conference %
+Jacksonville Jaguars 8 8 0 0.5 0.5625 0.5 0.0625 0.0 
+Tennessee Titans 7 9 0 0.4375 0.5 0.5 0.0 0.0 
+e- Indianapolis Colts 4 11 1 0.28125 0.0 0.0 0.0 0.0 
+e- Houston Texans 2 13 1 0.15625 0.0 0.0 0.0 0.0 
+AFC WestWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Kansas City Chiefs 13 3 0 0.8125 1.0 1.0 0.0 0.75 
+y- Los Angeles Chargers 10 6 0 0.625 1.0 0.0 1.0 0.0 
+e- Las Vegas Raiders 6 10 0 0.375 0.0 0.0 0.0 0.0 
+e- Denver Broncos 4 12 0 0.25 0.0 0.0 0.0 0.0 
+National Football Conference
+NFC EastWLTPCTPlayoff %Division %Wild Card %Conference %
+x- Philadelphia Eagles 13 3 0 0.8125 1.0 0.75 0.25 0.625 
+x- Dallas Cowboys 12 4 0 0.75 1.0 0.25 0.75 0.125 
+y- New York Giants 9 6 1 0.59375 1.0 0.0 1.0 0.0 
+e- Washington Commanders 7 8 1 0.46875 0.0 0.0 0.0 0.0 
+NFC NorthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Minnesota Vikings 12 4 0 0.75 1.0 1.0 0.0 0.0 
+Detroit Lions 8 8 0 0.5 0.25 0.0 0.25 0.0 
+Green Bay Packers 8 8 0 0.5 0.5 0.0 0.5 0.0 
+e- Chicago Bears 3 13 0 0.1875 0.0 0.0 0.0 0.0 
+NFC SouthWLTPCTPlayoff %Division %Wild Card %Conference %
+z- Tampa Bay Buccaneers 8 8 0 0.5 1.0 1.0 0.0 0.0 
+e- New Orleans Saints 7 9 0 0.4375 0.0 0.0 0.0 0.0 
+e- Carolina Panthers 6 10 0 0.375 0.0 0.0 0.0 0.0 
+e- Atlanta Falcons 6 10 0 0.375 0.0 0.0 0.0 0.0 
+NFC WestWLTPCTPlayoff %Division %Wild Card %Conference %
+z- San Francisco 49ers 12 4 0 0.75 1.0 1.0 0.0 0.25 
+Seattle Seahawks 8 8 0 0.5 0.25 0.0 0.25 0.0 
+e- Los Angeles Rams 5 11 0 0.3125 0.0 0.0 0.0 0.0 
+e- Arizona Cardinals 4 12 0 0.25 0.0 0.0 0.0 0.0 

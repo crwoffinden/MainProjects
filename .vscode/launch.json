@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "PlayoffChances.Main",
             "projectName": "MainProjects_2457ee02",
-            "args": ["2022Final.txt", "2022FinalStandings.txt"]
+            "args": ["2022Week17.txt", "2022Week17Standings.txt"]
         }
     ]
 }
