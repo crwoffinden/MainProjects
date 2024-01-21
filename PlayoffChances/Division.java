@@ -27,7 +27,7 @@ public class Division {
             if (!real) winPcts[i] = teams[i].getProjectedWinPct();
             else winPcts[i] = teams[i].getRealWinPct();
             int j = i;
-            while (j > 0 && winPcts[j] > winPcts[j - 1]) {
+            while (j > 0 && (winPcts[j] > winPcts[j - 1]) || (winPcts[j] == winPcts[j - 1] && teams[j].g)) {
                 Team temp = teams[j - 1];
                 teams[j - 1] = teams[j];
                 teams[j] = temp;
